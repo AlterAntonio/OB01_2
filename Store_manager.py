@@ -36,7 +36,6 @@ class Store:
     def update_price(self, item, price):
         if item in self.items:
             if self.items[item] > price:
-                print('(Тревога, зафиксировано снижение цены!)')
                 before = self.items[item]
                 discount = (before - price) / before * 100
                 print(f'Магазин "{self.name}": (Тревога, зафиксировано снижение цены!)\nГрандиозные скидки!!! Горячее '
@@ -70,24 +69,46 @@ def business(shop):
         user_choice = input('Ваш выбор: ')
         match user_choice:
             case '1':
-                item = input('Добавте наименование товара: ')
-                price = float(input('Добавьте цену товара: '))
+                item = input('Добавте наименование товара: ').capitalize()
+                if item == '': continue
+                price = input('Добавьте цену товара: ')
+                if price == '': continue
+                else: price = float(price)
                 shop.add_item(item, price)
             case '2':
-                item = input('Укажите наименование товара для удаления из ассортимента: ')
+                item = input('Укажите наименование товара для удаления из ассортимента: ').capitalize()
+                if item == '': continue
                 shop.remove_item(item)
             case '3':
-                item = input('Узнать стоимость какого товара вы хотите: ')
+                item = input('Узнать стоимость какого товара вы хотите: ').capitalize()
+                if item == '': continue
                 shop.get_price(item)
             case '4':
-                item = input('Введите наименование товара, цену которого хотите изменить: ')
-                if item not in shop.items:
+                item = input('Введите наименование товара, цену которого хотите изменить: ').capitalize()
+                if item == '': continue
+                elif item not in shop.items:
                     print(f'Товара {item} в ассортименте нету')
                     continue
                 else:
-                    price = float(input('Введите цену: '))
+                    price = input('Добавьте цену товара: ')
+                    if price == '':
+                        continue
+                    else:
+                        price = float(price)
                     shop.update_price(item, price)
             case '5':
                 shop.items_list()
             case '0': break
             case _: continue
+
+while True:
+    user_choice = input('1 - "Местный продуктовый"\n2 - "Чародейские Штуки"\n3 - "Космо-Комплект"'
+                        '\nВыберите каким магазином собираетесь управлять: ')
+    if user_choice == '1':
+        business(local_store)
+    elif user_choice == '2':
+        business(magic_store)
+    elif user_choice == '3':
+        business(space_store)
+    else:
+        continue
