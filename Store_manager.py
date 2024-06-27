@@ -13,4 +13,24 @@ class Store():
             print(f'Магазин "{self.name}": товар с наименованием "{item}" уже есть в ассортименте по цене '
                   f'{self.items[item]}')
 
-    
+    def remove_item(self, item):
+        if item in self.items:
+            del self.items[item]
+            print(f'Магазин "{self.name}": товар "{item}" удалён из ассортимента.')
+        else: print(f'Магазин "{self.name}: так товара с названием "{item}" и не было в наличии.')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            )
