@@ -61,6 +61,33 @@ local_store = Store(items=test_list)
 magic_store = Store('Чародейские Заморочки', 'Улица Волшебников, дом 17', magic_list)
 space_store = Store('Космо-Комплект', 'Улица Гагарина 42', space_list)
 
-
-
-
+def business(shop):
+    while True:
+        print(f'Магазин "{shop.name}":\n'
+              '1 - добавить товар;\n2 - удалить товар;\n3 - узнать цену на товар;\n4 - изменить цену на товар;'
+              '\n5 - вывести список товаров и цен.\n0 - выбрать другой магазин'
+              '\nЧтобы вернуться к выбору операций просто нажмите Enter.')
+        user_choice = input('Ваш выбор: ')
+        match user_choice:
+            case '1':
+                item = input('Добавте наименование товара: ')
+                price = float(input('Добавьте цену товара: '))
+                shop.add_item(item, price)
+            case '2':
+                item = input('Укажите наименование товара для удаления из ассортимента: ')
+                shop.remove_item(item)
+            case '3':
+                item = input('Узнать стоимость какого товара вы хотите: ')
+                shop.get_price(item)
+            case '4':
+                item = input('Введите наименование товара, цену которого хотите изменить: ')
+                if item not in shop.items:
+                    print(f'Товара {item} в ассортименте нету')
+                    continue
+                else:
+                    price = float(input('Введите цену: '))
+                    shop.update_price(item, price)
+            case '5':
+                shop.items_list()
+            case '0': break
+            case _: continue
